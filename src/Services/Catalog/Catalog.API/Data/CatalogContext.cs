@@ -21,6 +21,8 @@ namespace Catalog.API.Data
 
             this.Products = database.GetCollection<Product>(collectionName);
 
+            CatalogContextSeed.SeedData(Products);
+
         }
 
         public IMongoCollection<Product> Products { get; }

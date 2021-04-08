@@ -36,7 +36,8 @@ namespace Catalog.API
 
             services.AddTransient<ICatalogContext, CatalogContext>();
             services.AddTransient<IProductRepository, ProductRepository>();
-            //services.AddTransient<Ilo>
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
