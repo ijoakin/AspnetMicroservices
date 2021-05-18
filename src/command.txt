@@ -1,0 +1,30 @@
+docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml up -d
+-------------------------------- mongo --------------------------------------
+docker pull mongo
+docker exec -it mongodb /bin/bash
+mongo
+show dbs
+use [name]
+db.CreateCollection('Products')
+db.Products.inser(MyJson)
+
+
+
+-------------------------------- redis --------------------------------------
+docker pull redis
+docker exec -it basketdb /bin/sh
+redis-cli
+
+keys *
+get name
+set name "value"
+
+-+----------------------------- postgres ----------------------------------
+
+docker pull postgres
+
+
+---------------------------------------------------------------------------
+Jenkins
+admin
+Ignacio05

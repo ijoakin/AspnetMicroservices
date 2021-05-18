@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Basket.API.Entities;
+using Basket.API.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Basket.API.Controllers
@@ -11,24 +14,44 @@ namespace Basket.API.Controllers
     [Route("[controller]")]
     public class BasketController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
 
+        private readonly IBasketRepository _basketRepository;
         private readonly ILogger<BasketController> _logger;
 
-        public BasketController(ILogger<BasketController> logger)
+        public BasketController(ILogger<BasketController> logger, IBasketRepository basketRepository)
         {
-            _logger = logger;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _basketRepository = basketRepository ?? throw new ArgumentNullException(nameof(basketRepository));
+
+        }
+        
+        [HttpGet("GetBasket")]
+        [ProducesResponseType(typeof(ShoppingCart), (int) HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<ActionResult<ShoppingCart>> GetBasket(string userName)
+        {
+            if (string.IsNullOrEmpty(userName)) return NotFound();
+
+            var basket = await _basketRepository.GetBasket(userName);
+
+            return Ok(basket ?? new ShoppingCart());
+        }
+        [HttpPost("UpdateBasket")]
+        [ProducesResponseType(typeof(ShoppingCart), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<ActionResult<ShoppingCart>> UpdateBasket([FromBody] ShoppingCart shoppingCart)
+        {
+            if (string.IsNullOrEmpty(shoppingCart.UserName)) return NotFound();
+            return Ok(await _basketRepository.UpdateBasket(shoppingCart));
         }
 
-        [HttpGet]
-        public IEnumerable<Testing> Get()
+        [HttpDelete("DeleteBasket")]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
+        public async Task<ActionResult<bool>> DeleteBasket(string userName)
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new Testing())
-            .ToArray();
+            await _basketRepository.DeleteBasket(userName);
+            return Ok();
         }
     }
 }
