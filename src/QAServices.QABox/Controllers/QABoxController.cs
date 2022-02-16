@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace QAServices.QABox.Controllers
@@ -24,10 +25,12 @@ namespace QAServices.QABox.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<QABox> Get()
+        [ProducesResponseType(typeof(IEnumerable<QABox>), (int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
+        public ActionResult<IEnumerable<QABox>> Get()
         {
             var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new QABox
+            var data = Enumerable.Range(1, 5).Select(index => new QABox
             {
                 Date = DateTime.Now.AddDays(index),
                 Description = "",
@@ -35,6 +38,9 @@ namespace QAServices.QABox.Controllers
                 Id = index
             })
             .ToArray();
+
+            if (data.Length == 0) return NotFound();
+            return Ok(data);
         }
     }
 }

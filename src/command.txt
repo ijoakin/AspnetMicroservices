@@ -1,4 +1,16 @@
+CMD
+cd C:\devel\AspnetMicroservices\src\
 docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml up -d
+
+bash
+cd /C/devel/AspnetMicroservices/src/
+docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml up -d
+-------------------------------- Catalog.API --------------------------------
+http://localhost:8000/swagger/index.html
+
+Connect to mongo:
+
+
 -------------------------------- mongo --------------------------------------
 docker pull mongo
 docker exec -it mongodb /bin/bash
@@ -8,8 +20,6 @@ use [name]
 db.CreateCollection('Products')
 db.Products.inser(MyJson)
 
-
-
 -------------------------------- redis --------------------------------------
 docker pull redis
 docker exec -it basketdb /bin/sh
@@ -18,13 +28,38 @@ redis-cli
 keys *
 get name
 set name "value"
+---------------------------------portainer-----------------------------------
+
+https://portainer.readthedocs.io/en/stable/deployment.html
+http://localhost:9000/
+
+user: admin
+pass: Ignacio05
+
 
 -+----------------------------- postgres ----------------------------------
-
 docker pull postgres
 
+http://localhost:5050
+pgadmin
+- PGADMIN_DEFAULT_EMAIL=admin@aspnetrun.com
+- PGADMIN_DEFAULT_PASSWORD=admin1234
+------------------------------- Jenkins --------------------------------------
 
----------------------------------------------------------------------------
 Jenkins
 admin
 Ignacio05
+------------------------------------------------------------
+
+Libraries
+SharpZipLib
+FluentEmail
+MailKit
+Papercut SMTP
+EPPlus -> management Excels files
+HangFire -> background processing
+MassTransit -> Service Bus Services QUEUE (distributed applications)
+RabitMQueue
+Polly -> Retry again an API configure automatic retry
+Serilog -> similar log4net, 
+Seq -> 
