@@ -32,7 +32,12 @@ services:
     build:
       context: .
       dockerfile: Services/Discount/Discount.API/Dockerfile
-
+  
+  practice1.api:
+    image: ${DOCKER_REGISTRY-}practice1
+    build:
+      context: .
+      dockerfile: Services/Discount/Discount.API/Dockerfile
 volumes:
     mongo_data:
     portainer_data:

@@ -8,17 +8,16 @@ docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml up -d
 -------------------------------- Catalog.API --------------------------------
 http://localhost:8000/swagger/index.html
 
-Connect to mongo:
-
 
 -------------------------------- mongo --------------------------------------
+Connect to mongo:
 docker pull mongo
-docker exec -it mongodb /bin/bash
-mongo
-show dbs
-use [name]
-db.CreateCollection('Products')
-db.Products.inser(MyJson)
+docker exec -it catalogdb /bin/bash
+> mongo
+> show dbs
+> use [name]
+> db.CreateCollection('Products')
+> db.Products.insert(MyJson)
 
 -------------------------------- redis --------------------------------------
 docker pull redis
@@ -28,6 +27,17 @@ redis-cli
 keys *
 get name
 set name "value"
+----------------------------------APIS -------------------------------------
+
+- Basket.API API
+http://localhost:8001/swagger/index.html
+
+-Catalog API
+http://localhost:8000/swagger/index.html
+
+-Discount.API
+http://localhost:8002/swagger/index.html
+
 ---------------------------------portainer-----------------------------------
 
 https://portainer.readthedocs.io/en/stable/deployment.html
@@ -63,3 +73,7 @@ RabitMQueue
 Polly -> Retry again an API configure automatic retry
 Serilog -> similar log4net, 
 Seq -> 
+
+-------------------------- Docker ----------------------------
+
+docker network list

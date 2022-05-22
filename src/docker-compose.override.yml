@@ -8,6 +8,8 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db 
+    networks:
+      - red-nacho
   
   basketdb:
     container_name: basketdb
@@ -57,6 +59,8 @@ services:
       - catalogdb
     ports:
       - "8000:80"
+    networks:
+      - red-nacho
 
   basket.api:
     container_name: basket.api
@@ -75,4 +79,13 @@ services:
       - discountdb
     ports:
       - "8002:80"
+  
+  practice1.api:
+    container_name: practice1.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8003:80"
 
+networks:
+  red-nacho:

@@ -24,9 +24,9 @@ namespace Basket.API.Controllers
             _basketRepository = basketRepository ?? throw new ArgumentNullException(nameof(basketRepository));
 
         }
-        
+
         [HttpGet("GetBasket")]
-        [ProducesResponseType(typeof(ShoppingCart), (int) HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ShoppingCart), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<ShoppingCart>> GetBasket(string userName)
         {
@@ -46,8 +46,8 @@ namespace Basket.API.Controllers
         }
 
         [HttpDelete("DeleteBasket")]
-        [ProducesResponseType((int) HttpStatusCode.OK)]
-        [ProducesResponseType((int) HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<bool>> DeleteBasket(string userName)
         {
             await _basketRepository.DeleteBasket(userName);
